@@ -47,7 +47,7 @@ export default function LoginView() {
         <label htmlFor={emailInputId}>E-mail</label>
         <input
           id={emailInputId}
-          type={'text'}
+          type={'email'}
           name={'email'}
           value={email}
           onChange={handleInputValues}
@@ -57,7 +57,7 @@ export default function LoginView() {
         <label htmlFor={passwordInputId}>Password</label>
         <input
           id={passwordInputId}
-          type={'text'}
+          type={'password'}
           name={'password'}
           value={password}
           onChange={handleInputValues}

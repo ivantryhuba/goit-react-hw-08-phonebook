@@ -64,7 +64,7 @@ export default function RegisterView() {
         <label htmlFor={passwordInputId}>Password</label>
         <input
           id={passwordInputId}
-          type={'text'}
+          type={'password'}
           name={'password'}
           value={password}
           onChange={handleInputValues}
@@ -74,7 +74,7 @@ export default function RegisterView() {
         <label htmlFor={nameInputId}>E-mail</label>
         <input
           id={emailInputId}
-          type={'text'}
+          type={'email'}
           name={'email'}
           value={email}
           onChange={handleInputValues}

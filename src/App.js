@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getAllContacts } from './redux/contacts/contactsSelector';
 import { connect } from 'react-redux';
 import { Container } from './components/Container/Container';
+import AppBar from './components/AppBar/AppBar';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
 import Filter from './components/Filter/Filter';
@@ -21,13 +22,14 @@ const Login = lazy(() =>
 const App = ({ contacts }) => {
   return (
     <Container>
+      <AppBar />
       <Suspense fallback={'Loading...'}>
         <Switch>
           <Route path="/register" exact>
             <Register />
           </Route>
 
-          <Route path="/" exact>
+          <Route path="/login" exact>
             <Login />
           </Route>
         </Switch>

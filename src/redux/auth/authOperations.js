@@ -47,3 +47,14 @@ export const login = user => dispatch => {
     })
     .catch(error => dispatch(loginError(error)));
 };
+
+export const logOut = () => dispatch => {
+  dispatch(logoutRequest());
+  axios
+    .post('/users/logout')
+    .then(({ data }) => {
+      token.unset();
+      dispatch(logoutSuccess(data));
+    })
+    .catch(error => dispatch(logoutError(error)));
+};
