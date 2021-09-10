@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getVisibleContacts } from '../../redux/contactsSelector';
-import { fetchContacts, removeContact } from '../../redux/contactsOperations';
+import { getVisibleContacts } from '../../redux/contacts/contactsSelector';
+import {
+  fetchContacts,
+  removeContact,
+} from '../../redux/contacts/contactsOperations';
 import { connect, useDispatch } from 'react-redux';
 import { Notification } from '../Notification/Notification';
 import {
