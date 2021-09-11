@@ -52,9 +52,28 @@ export const logOut = () => dispatch => {
   dispatch(logoutRequest());
   axios
     .post('/users/logout')
-    .then(({ data }) => {
+    .then(() => {
       token.unset();
-      dispatch(logoutSuccess(data));
+      dispatch(logoutSuccess());
     })
     .catch(error => dispatch(logoutError(error)));
+};
+
+export const getCurrentUser = () => (dispatch, getState) => {
+  const {
+    auth: { token: persistedToken },
+  } = getState();
+
+  if (!persistedToken) {
+    return;
+  }
+
+  token.set(persistedToken);
+
+  dispatch(getCurrentUserRequest());
+
+  axios
+    .get('/users/current')
+    .then(({ data }) => dispatch(getCurrentUserSuccess(data)))
+    .catch(error => dispatch(getCurrentUserError(error)));
 };

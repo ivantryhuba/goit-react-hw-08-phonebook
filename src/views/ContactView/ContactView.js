@@ -6,14 +6,14 @@ import {
   removeContact,
 } from '../../redux/contacts/contactsOperations';
 import { connect, useDispatch } from 'react-redux';
-import { Notification } from '../Notification/Notification';
+import { Notification } from '../../components/Notification/Notification';
 import {
   ContactListStyled,
   ContactItemStyled,
   RemoveBtnStyled,
-} from './ContactList.styles';
+} from './ContactView.styles';
 
-const ContactList = ({ contacts, onRemoveContact }) => {
+const ContactView = ({ contacts, onRemoveContact }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,10 +43,10 @@ const ContactList = ({ contacts, onRemoveContact }) => {
   );
 };
 
-ContactList.propTypes = {
+ContactView.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired,
     }),
@@ -62,4 +62,4 @@ const mapDispatchToProps = dispatch => ({
   onRemoveContact: id => dispatch(removeContact(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactView);
