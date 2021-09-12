@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { getVisibleContacts } from '../../redux/contacts/contactsSelector';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import {
-  fetchContacts,
-  removeContact,
-} from '../../redux/contacts/contactsOperations';
-import { connect, useDispatch } from 'react-redux';
+  getAllContacts,
+  getFilteredContacts,
+  getIsEmpty,
+} from '../../redux/contacts/contactsSelector';
+import { fetchContacts } from '../../redux/contacts/contactsOperations';
+import { v4 as uuidv4 } from 'uuid';
+import ContactForm from '../../components/ContactForm/ContactForm';
+import Contact from '../../components/Contact/Contact';
+import Filter from '../../components/Filter/Filter';
 import { Notification } from '../../components/Notification/Notification';
-import {
-  ContactListStyled,
-  ContactItemStyled,
-  RemoveBtnStyled,
-} from './ContactView.styles';
+import { H1Styled, H2Styled, ContactListStyled } from './ContactView.styles';
 
-const ContactView = ({ contacts, onRemoveContact }) => {
+const ContactView = () => {
+  const contacts = useSelector(getAllContacts);
+  const filteredContacts = useSelector(getFilteredContacts);
+  const isEmpty = useSelector(getIsEmpty);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,44 +26,37 @@ const ContactView = ({ contacts, onRemoveContact }) => {
 
   return (
     <>
-      {contacts.length > 0 ? (
+      <H1Styled>PhoneBook</H1Styled>
+      <H2Styled>Add contact</H2Styled>
+      <ContactForm />
+      <H2Styled>Contacts</H2Styled>
+
+      {contacts.length > 0 && (
+        <Filter
+          id={uuidv4()}
+          label={'Find contacts by name'}
+          placeholder={'Boris Britva'}
+          name={'search'}
+        />
+      )}
+
+      {filteredContacts.length ? (
         <ContactListStyled>
-          {contacts.map(({ id, name, number }) => (
-            <ContactItemStyled key={id}>
-              {name} : {number}
-              <RemoveBtnStyled
-                type="button"
-                onClick={() => onRemoveContact(id)}
-              >
-                Remove
-              </RemoveBtnStyled>
-            </ContactItemStyled>
+          {filteredContacts.map(({ id, name, number }) => (
+            <Contact key={id} name={name} number={number} id={id} />
           ))}
         </ContactListStyled>
-      ) : (
+      ) : null}
+
+      {!contacts[0] && isEmpty && (
         <Notification text={'You don`t have any contacts'} />
+      )}
+
+      {contacts[0] && !filteredContacts.length && (
+        <Notification text={'No contact matches '} />
       )}
     </>
   );
 };
 
-ContactView.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  onRemoveContact: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => ({
-  contacts: getVisibleContacts(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  onRemoveContact: id => dispatch(removeContact(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactView);
+export default connect()(ContactView);

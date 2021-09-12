@@ -2,11 +2,16 @@ import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 
 import {
+  registerRequest,
   registerSuccess,
   registerError,
+  loginRequest,
   loginSuccess,
   loginError,
+  logoutRequest,
   logoutSuccess,
+  logoutError,
+  getCurrentUserRequest,
   getCurrentUserSuccess,
   getCurrentUserError,
 } from './authActions';
@@ -36,8 +41,15 @@ const isLoggedIn = createReducer(false, {
   [getCurrentUserError]: () => false,
 });
 
+const isFetchingCurrent = createReducer(false, {
+  [getCurrentUserRequest]: () => true,
+  [getCurrentUserSuccess]: () => false,
+  [getCurrentUserError]: () => false,
+});
+
 export default combineReducers({
   user,
   token,
   isLoggedIn,
+  isFetchingCurrent,
 });

@@ -4,7 +4,9 @@ export const getAllContacts = state => state.contactList.contacts;
 
 export const getFilter = state => state.contactList.filter;
 
-export const getVisibleContacts = createSelector(
+export const getIsEmpty = state => state.contactList.empty;
+
+export const getFilteredContacts = createSelector(
   [getAllContacts, getFilter],
   (contacts, filter) => {
     const normalizeFilter = filter.toLowerCase();

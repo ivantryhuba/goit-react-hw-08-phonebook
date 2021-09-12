@@ -5,6 +5,7 @@ import {
   addContactSuccess,
   removeContactSuccess,
   changeFilter,
+  isEmpty,
 } from './contactsActions';
 
 const contacts = createReducer([], {
@@ -18,7 +19,20 @@ const filter = createReducer('', {
   [changeFilter]: (_, { payload }) => payload,
 });
 
+// const isFetchingContacts=createReducer(false,{
+// [fetchContactsRequest]:()=>true,
+// [fetchContactsSuccess]:()=>false,
+// [fetchContactsError]:()=>false
+// })
+
+const empty = createReducer(false, {
+  [isEmpty]: (_, { payload }) => {
+    return payload;
+  },
+});
+
 export default combineReducers({
   contacts,
   filter,
+  empty,
 });

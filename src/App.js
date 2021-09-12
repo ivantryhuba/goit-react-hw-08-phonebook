@@ -1,17 +1,13 @@
 import React, { useEffect, lazy, Suspense } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
+import { Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { PrivateRoute } from './components/PrivateRoute';
 import { PublicRoute } from './components/PublicRoute';
-import { getAllContacts } from './redux/contacts/contactsSelector';
 import { connect } from 'react-redux';
 import { Container } from './components/Container/Container';
 import AppBar from './components/AppBar/AppBar';
-import ContactForm from './components/ContactForm/ContactForm';
-import Filter from './components/Filter/Filter';
-import { H1Styled, H2Styled } from './App.styles';
 import { getCurrentUser } from './redux/auth/authOperations';
+import { getIsFetchingCurrent } from './redux/auth/authSelector';
 
 const Home = lazy(() =>
   import('./views/HomeView/HomeView' /* webpackChunkName: "Home" */),
@@ -33,30 +29,34 @@ const Contacts = lazy(() =>
 
 const App = ({ contacts }) => {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(getIsFetchingCurrent);
+
+  console.log(`isRefreshing`, isRefreshing);
 
   useEffect(() => {
     dispatch(getCurrentUser());
   }, [dispatch]);
 
   return (
-    <Container>
-      <AppBar />
-      <Suspense fallback={'Loading...'}>
-        <Switch>
-          <PublicRoute path="/" exact>
-            <Home />
-          </PublicRoute>
+    !isRefreshing && (
+      <Container>
+        <AppBar />
+        <Suspense fallback={<p>Loading...</p>}>
+          <Switch>
+            <PublicRoute path="/" exact>
+              <Home />
+            </PublicRoute>
 
-          <PublicRoute path="/register" exact restricted>
-            <Register />
-          </PublicRoute>
+            <PublicRoute path="/register" redirectTo="/contacts" restricted>
+              <Register />
+            </PublicRoute>
 
-          <PublicRoute path="/login" exact restricted>
-            <Login />
-          </PublicRoute>
+            <PublicRoute path="/login" redirectTo="/contacts" restricted>
+              <Login />
+            </PublicRoute>
 
-          <PrivateRoute path="/contacts">
-            <H1Styled>PhoneBook</H1Styled>
+            <PrivateRoute path="/contacts">
+              {/* <H1Styled>PhoneBook</H1Styled>
             <H2Styled>Add contact</H2Styled>
             <ContactForm />
             <H2Styled>Contacts</H2Styled>
@@ -68,34 +68,14 @@ const App = ({ contacts }) => {
                 placeholder={'Boris Britva'}
                 name={'search'}
               />
-            )}
-            <Contacts />
-          </PrivateRoute>
-
-          {/* <Route path="/contacts" exact>
-            <H1Styled>PhoneBook</H1Styled>
-            <H2Styled>Add contact</H2Styled>
-            <ContactForm />
-            <H2Styled>Contacts</H2Styled>
-
-            {contacts.length > 0 && (
-              <Filter
-                id={uuidv4()}
-                label={'Find contacts by name'}
-                placeholder={'Boris Britva'}
-                name={'search'}
-              />
-            )}
-            <Contacts />
-          </Route> */}
-        </Switch>
-      </Suspense>
-    </Container>
+            )} */}
+              <Contacts />
+            </PrivateRoute>
+          </Switch>
+        </Suspense>
+      </Container>
+    )
   );
 };
 
-const mapStateToProps = state => ({
-  contacts: getAllContacts(state),
-});
-
-export default connect(mapStateToProps)(App);
+export default connect()(App);
