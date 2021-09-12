@@ -17,7 +17,7 @@ export const LabelStyled = styled.label`
 `;
 
 export const InputStyled = styled.input`
-  width: 250px;
+  width: 100%;
   margin-bottom: 15px;
   padding: 10px;
   border: 2px solid green;

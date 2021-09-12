@@ -27,11 +27,9 @@ const Contacts = lazy(() =>
   import('./views//ContactView/ContactView' /* webpackChunkName: "Contacts" */),
 );
 
-const App = ({ contacts }) => {
+const App = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(getIsFetchingCurrent);
-
-  console.log(`isRefreshing`, isRefreshing);
 
   useEffect(() => {
     dispatch(getCurrentUser());

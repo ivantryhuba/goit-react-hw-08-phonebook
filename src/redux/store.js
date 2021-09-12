@@ -12,7 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 import authReducer from './auth/authReducer';
 import contactsReducer from './contacts/contactsReducer';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 
 const authPersistConfig = {
   key: 'auth',
@@ -20,7 +20,7 @@ const authPersistConfig = {
   whitelist: ['token'],
 };
 
-// console.log(process.env.NODE_ENV);
+console.log(process.env.NODE_ENV);
 
 export const store = configureStore({
   reducer: {

@@ -3,6 +3,14 @@ import { useDispatch } from 'react-redux';
 import { register } from '../../redux/auth/authOperations';
 import { v4 as uuidv4 } from 'uuid';
 
+import {
+  H2Styled,
+  FormStyled,
+  LabelStyled,
+  InputStyled,
+  SubmitButtonStyled,
+} from './RegisterView.styles';
+
 export default function RegisterView() {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
@@ -48,11 +56,11 @@ export default function RegisterView() {
 
   return (
     <div>
-      <h1>Sign up for PhoneBook</h1>
+      <H2Styled>Sign up for PhoneBook</H2Styled>
 
-      <form onSubmit={handleSubmit} autoComplete="off">
-        <label htmlFor={nameInputId}>Name</label>
-        <input
+      <FormStyled onSubmit={handleSubmit} autoComplete="off">
+        <LabelStyled htmlFor={nameInputId}>Name</LabelStyled>
+        <InputStyled
           id={nameInputId}
           type={'text'}
           name={'name'}
@@ -61,8 +69,8 @@ export default function RegisterView() {
           required={true}
         />
 
-        <label htmlFor={passwordInputId}>Password</label>
-        <input
+        <LabelStyled htmlFor={passwordInputId}>Password</LabelStyled>
+        <InputStyled
           id={passwordInputId}
           type={'password'}
           name={'password'}
@@ -71,8 +79,8 @@ export default function RegisterView() {
           required={true}
         />
 
-        <label htmlFor={nameInputId}>E-mail</label>
-        <input
+        <LabelStyled htmlFor={nameInputId}>E-mail</LabelStyled>
+        <InputStyled
           id={emailInputId}
           type={'email'}
           name={'email'}
@@ -81,8 +89,8 @@ export default function RegisterView() {
           required={true}
         />
 
-        <button type="submit">Sing up</button>
-      </form>
+        <SubmitButtonStyled type="submit">Sing up</SubmitButtonStyled>
+      </FormStyled>
     </div>
   );
 }

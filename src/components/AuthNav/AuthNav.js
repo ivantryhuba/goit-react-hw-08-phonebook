@@ -1,17 +1,17 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { AuthNavCont, AuthNavLink } from './AuthNav.styles';
 
 export const AuthNav = () => {
   return (
-    <div>
-      <NavLink to="/register" exact>
+    <AuthNavCont>
+      <AuthNavLink href="/register" exact="true">
         Sign Up
-      </NavLink>
+      </AuthNavLink>
 
-      <NavLink to="/login" exact>
+      <AuthNavLink href="/login" exact="true">
         Sign In
-      </NavLink>
-    </div>
+      </AuthNavLink>
+    </AuthNavCont>
   );
 };
 
