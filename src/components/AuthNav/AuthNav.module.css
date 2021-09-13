@@ -1,6 +1,4 @@
-import styled from '@emotion/styled';
-
-export const AuthNavCont = styled.div`
+.authNavCont {
   display: flex;
   justify-content: space-evenly;
   width: 200px;
@@ -8,15 +6,17 @@ export const AuthNavCont = styled.div`
   font-size: 20px;
   font-weight: 700;
   color: black;
-`;
+}
 
-export const AuthNavLink = styled.a`
+.authNavLink {
   color: Gray;
   padding: 5px;
   border: 2px solid;
   border-radius: 5px;
+}
 
-  &:hover {
-    color: LightSkyBlue;
-  }
-`;
+.authNavLink:hover,
+.authNavLink:focus,
+.actAuthNavLink {
+  color: LightSkyBlue;
+}
